@@ -17,12 +17,12 @@ FetchContent_MakeAvailable(googletest)
 
 enable_testing()
 
-
 include_directories(include/)
 
 set(SOURCE
 	#"src/main.cpp"
     "src/Vec2.cpp"
+	"src/Vec2Tests.cpp"
 #	"src/Vec3.cpp"
 #	"src/Vec4.cpp"
 	"include/Vec2.hpp"
@@ -31,6 +31,7 @@ set(SOURCE
 )
 
 add_executable(${PROJECT_NAME} ${SOURCE})
+
 
 target_link_libraries(${PROJECT_NAME} GTest::gtest_main)
 
