@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <iostream>
+#include <algorithm>
 
 namespace stw
 {
@@ -17,48 +18,131 @@ struct Vec2
 	float x;
 	float y;
 
-	static Vec2 Lerp(Vec2 a, Vec2 b, float t);
+	constexpr static Vec2 Lerp(Vec2 a, Vec2 b, float t);
 	constexpr static Vec2 Zero();
 
 	[[nodiscard]] float Magnitude() const;
 
-	[[nodiscard]] float SqrMagnitude() const;
+	[[nodiscard]] constexpr float SqrMagnitude() const;
 
 	[[nodiscard]] Vec2 Normalized() const;
 
-	[[nodiscard]] float Dot(Vec2 other) const;
+	[[nodiscard]] constexpr float Dot(Vec2 other) const;
 
 	[[nodiscard]] float Distance(Vec2 other) const;
 
 	[[nodiscard]] float Angle(Vec2 other) const;
 
-	[[nodiscard]] float Major() const;
+	[[nodiscard]] constexpr float Major() const;
 
-	[[nodiscard]] Vec2 PositivePerpendicular() const;
+	[[nodiscard]] constexpr Vec2 PositivePerpendicular() const;
 
-	[[nodiscard]] Vec2 NegativePerpendicular() const;
+	[[nodiscard]] constexpr Vec2 NegativePerpendicular() const;
 
 	[[nodiscard]] Vec2 NewMagnitude(float newMagnitude) const;
 
 	[[nodiscard]] std::string ToString() const;
 
-	Vec2 operator+(Vec2 other) const;
-	Vec2 operator-(Vec2 other) const;
-	Vec2 operator+=(Vec2 other);
-	Vec2 operator-=(Vec2 other);
-	Vec2 operator*=(float scalar);
-	Vec2 operator/=(float scalar);
-	bool operator==(Vec2 other) const;
-	Vec2 operator-() const;
+	constexpr Vec2 operator+(Vec2 other) const;
+	constexpr Vec2 operator-(Vec2 other) const;
+	constexpr Vec2 operator+=(Vec2 other);
+	constexpr Vec2 operator-=(Vec2 other);
+	constexpr Vec2 operator*=(float scalar);
+	constexpr Vec2 operator/=(float scalar);
+	constexpr bool operator==(Vec2 other) const;
+	constexpr Vec2 operator-() const;
 
 	friend Vec2 operator*(Vec2 vec, float scalar);
 	friend Vec2 operator*(float scalar, Vec2 vec);
 	friend Vec2 operator/(Vec2 vec, float scalar);
 };
 
+constexpr Vec2 Vec2::Lerp(const Vec2 a, const Vec2 b, float t)
+{
+	t = std::clamp(t, 0.0f, 1.0f);
+	return {
+			a.x + (b.x - a.x) * t,
+			a.y + (b.y - a.y) * t
+	};
+}
+
 constexpr Vec2 Vec2::Zero()
 {
 	return {0, 0};
+}
+
+constexpr float Vec2::SqrMagnitude() const
+{
+	return x * x + y * y;
+}
+
+constexpr float Vec2::Dot(const Vec2 other) const
+{
+	return this->x * other.x + this->y * other.y;
+}
+
+
+constexpr float Vec2::Major() const
+{
+	return std::max(x, y);
+}
+
+constexpr Vec2 Vec2::PositivePerpendicular() const
+{
+	return {-y, x};
+}
+
+constexpr Vec2 Vec2::NegativePerpendicular() const
+{
+	return {y, -x};
+}
+
+constexpr Vec2 Vec2::operator+(const Vec2 other) const
+{
+	return {this->x + other.x, this->y + other.y};
+}
+
+constexpr Vec2 Vec2::operator-(const Vec2 other) const
+{
+	return {this->x - other.x, this->y - other.y};
+}
+
+constexpr Vec2 Vec2::operator+=(const Vec2 other)
+{
+	this->x += other.x;
+	this->y += other.y;
+	return *this;
+}
+
+constexpr Vec2 Vec2::operator-=(const Vec2 other)
+{
+	this->x -= other.x;
+	this->y -= other.y;
+	return *this;
+}
+
+constexpr Vec2 Vec2::operator*=(const float scalar)
+{
+	this->x *= scalar;
+	this->y *= scalar;
+	return *this;
+}
+
+constexpr Vec2 Vec2::operator/=(const float scalar)
+{
+	this->x /= scalar;
+	this->y /= scalar;
+	return *this;
+}
+
+constexpr bool Vec2::operator==(const Vec2 other) const
+{
+	return (x == other.x && y == other.y);
+}
+
+constexpr Vec2 Vec2::operator-() const
+{
+	return {-x, -y};
 }
 
 std::ostream& operator<<(std::ostream& os, Vec2 vec);
