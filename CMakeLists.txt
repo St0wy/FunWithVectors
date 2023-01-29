@@ -47,9 +47,14 @@ if (NOT raylib_cpp_FOUND)
     FetchContent_MakeAvailable(raylib_cpp)
 endif()
 
+include(cmake/data.cmake)
+
 set(MAIN "src/main.cpp")
 add_executable(Game ${MAIN})
 target_link_libraries(Game PRIVATE CoreLib raylib raylib_cpp)
+
+add_data_folder(Game)
+#set_target_properties (Game_Copy_Data PROPERTIES FOLDER Game/Main)
 
 # TESTS
 
