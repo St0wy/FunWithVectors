@@ -1,7 +1,7 @@
 // ReSharper disable CppClangTidyClangDiagnosticFloatEqual
 #include "Vec2.hpp"
 
-#include <format>
+#include <sstream>
 
 namespace stw
 {
@@ -39,7 +39,10 @@ Vec2 Vec2::NewMagnitude(const float newMagnitude) const
 
 std::string Vec2::ToString() const
 {
-	return std::format("[{}, {}]", x, y);
+	std::ostringstream ss;
+	ss << "[" << x << ", " << y << "]";
+	return ss.str();
+	//	return std::format("[{}, {}]", x, y);
 }
 
 std::ostream& operator<<(std::ostream& os, const Vec2 vec)
