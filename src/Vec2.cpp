@@ -2,67 +2,67 @@
 #include "Vec2.hpp"
 
 #include <sstream>
+#include <cmath>
 
 namespace stw
 {
-float Vec2::Magnitude() const
-{
-	return std::sqrt(SqrMagnitude());
-}
-
-Vec2 Vec2::Normalized() const
-{
-	if (x == 0 && y == 0)
+	float Vec2::Magnitude() const
 	{
-		return {0, 0};
+		return std::sqrt(SqrMagnitude());
 	}
 
-	const float invMag = 1.0f / Magnitude();
-	const Vec2 newVec = {x * invMag, y * invMag};
-	return newVec;
-}
+	Vec2 Vec2::Normalized() const
+	{
+		if (x == 0 && y == 0)
+		{
+			return {0, 0};
+		}
 
-float Vec2::Distance(const Vec2 other) const
-{
-	return std::sqrt((this->x - other.x) * (this->x - other.x) + (this->y - other.y) * (this->y - other.y));
-}
+		const float invMag = 1.0f / Magnitude();
+		const Vec2 newVec = {x * invMag, y * invMag};
+		return newVec;
+	}
 
-float Vec2::Angle(const Vec2 other) const
-{
-	return std::acos(this->Dot(other) / Magnitude() * other.Magnitude());
-}
+	float Vec2::Distance(const Vec2 other) const
+	{
+		return std::sqrt((this->x - other.x) * (this->x - other.x) + (this->y - other.y) * (this->y - other.y));
+	}
 
-Vec2 Vec2::NewMagnitude(const float newMagnitude) const
-{
-	return (*this * newMagnitude) / Magnitude();
-}
+	float Vec2::Angle(const Vec2 other) const
+	{
+		return std::acos(this->Dot(other) / Magnitude() * other.Magnitude());
+	}
 
-std::string Vec2::ToString() const
-{
-	std::ostringstream ss;
-	ss << "[" << x << ", " << y << "]";
-	return ss.str();
-	//	return std::format("[{}, {}]", x, y);
-}
+	Vec2 Vec2::NewMagnitude(const float newMagnitude) const
+	{
+		return (*this * newMagnitude) / Magnitude();
+	}
 
-std::ostream& operator<<(std::ostream& os, const Vec2 vec)
-{
-	return os << vec.ToString();
-}
+	std::string Vec2::ToString() const
+	{
+		std::ostringstream ss;
+		ss << "[" << x << ", " << y << "]";
+		return ss.str();
+		//	return std::format("[{}, {}]", x, y);
+	}
 
-Vec2 operator*(Vec2 vec, const float scalar)
-{
-	return vec *= scalar;
-}
+	std::ostream &operator<<(std::ostream &os, const Vec2 vec)
+	{
+		return os << vec.ToString();
+	}
 
-Vec2 operator*(const float scalar, const Vec2 vec)
-{
-	return operator*(vec, scalar);
-}
+	Vec2 operator*(Vec2 vec, const float scalar)
+	{
+		return vec *= scalar;
+	}
 
-Vec2 operator/(Vec2 vec, const float scalar)
-{
-	return vec /= scalar;
-}
-}
+	Vec2 operator*(const float scalar, const Vec2 vec)
+	{
+		return operator*(vec, scalar);
+	}
 
+	Vec2 operator/(Vec2 vec, const float scalar)
+	{
+		return vec /= scalar;
+	}
+}
