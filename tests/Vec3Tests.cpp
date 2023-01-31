@@ -1,6 +1,6 @@
 #include "Vec3.hpp"
 
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 #include <numbers>
 
 namespace stw

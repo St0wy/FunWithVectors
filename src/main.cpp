@@ -2,7 +2,6 @@
 // Created by stowy on 29/01/2023.
 //
 
-#include <iostream>
 #include <raylib-cpp.hpp>
 #include "Vec2.hpp"
 
