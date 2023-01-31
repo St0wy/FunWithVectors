@@ -1,6 +1,8 @@
 doxygen/
 cmake-build-debug-visual-studio/
 cmake-build-release-visual-studio/
+cmake-build-debug/
+cmake-build-release/
 build/
 
 ## Ignore Visual Studio temporary files, build results, and
