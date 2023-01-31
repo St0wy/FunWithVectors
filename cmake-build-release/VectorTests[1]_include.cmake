@@ -1,5 +1,0 @@
-if(EXISTS "/home/stowy/dev/FunWithVectors/cmake-build-release/VectorTests[1]_tests.cmake")
-  include("/home/stowy/dev/FunWithVectors/cmake-build-release/VectorTests[1]_tests.cmake")
-else()
-  add_test(VectorTests_NOT_BUILT VectorTests_NOT_BUILT)
-endif()
