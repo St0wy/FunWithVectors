@@ -4,7 +4,7 @@ include(FetchContent)
 
 project("Vectors" VERSION 0.1.0)
 
-set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # COMMON LIB
@@ -26,25 +26,27 @@ target_include_directories(CoreLib PUBLIC include/)
 # raylib
 find_package(raylib QUIET)
 if (NOT raylib_FOUND)
-    include(FetchContent)
     FetchContent_Declare(
             raylib
             GIT_REPOSITORY https://github.com/raysan5/raylib.git
             GIT_TAG 4.2.0
     )
     FetchContent_MakeAvailable(raylib)
+    get_target_property(RAYLIB_IID raylib INTERFACE_INCLUDE_DIRECTORIES)
+    set_target_properties(raylib PROPERTIES INTERFACE_SYSTEM_INCLUDE_DIRECTORIES "${RAYLIB_IID}")
 endif()
 
 # raylib-cpp
 find_package(raylib_cpp QUIET)
 if (NOT raylib_cpp_FOUND)
-    include(FetchContent)
     FetchContent_Declare(
             raylib_cpp
             GIT_REPOSITORY https://github.com/RobLoach/raylib-cpp.git
             GIT_TAG v4.2.8
     )
     FetchContent_MakeAvailable(raylib_cpp)
+    get_target_property(RAYLIB_CPP_IID raylib_cpp INTERFACE_INCLUDE_DIRECTORIES)
+    set_target_properties(raylib_cpp PROPERTIES INTERFACE_SYSTEM_INCLUDE_DIRECTORIES "${RAYLIB_CPP_IID}")
 endif()
 
 include(cmake/data.cmake)
@@ -54,7 +56,6 @@ add_executable(Game ${MAIN})
 target_link_libraries(Game PRIVATE CoreLib raylib raylib_cpp)
 
 add_data_folder(Game)
-#set_target_properties (Game_Copy_Data PROPERTIES FOLDER Game/Main)
 
 # TESTS
 
@@ -65,6 +66,8 @@ FetchContent_Declare(
 )
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
+get_target_property(GOOGLETEST_IID gtest INTERFACE_INCLUDE_DIRECTORIES)
+set_target_properties(gtest PROPERTIES INTERFACE_SYSTEM_INCLUDE_DIRECTORIES "${GOOGLETEST_IID}")
 
 enable_testing()
 
