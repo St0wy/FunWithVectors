@@ -65,4 +65,10 @@ Vec2 operator/(Vec2 vec, const float scalar)
 {
 	return vec /= scalar;
 }
+
+Vec2::operator raylib::Vector2() const
+{
+	return {x, y};
+}
+
 }

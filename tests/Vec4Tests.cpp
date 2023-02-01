@@ -16,7 +16,7 @@ TEST(Vec4Test, DefaultConstructsWithZero)
 
 TEST(Vec4Test, Constructor)
 {
-	constexpr Vec4 v{-10, 42, 6.66, 1};
+	constexpr Vec4 v{-10, 42, 6.66f, 1};
 	EXPECT_EQ(v.x, -10);
 	EXPECT_EQ(v.y, 42);
 	EXPECT_EQ(v.z, 6.66f);
@@ -99,9 +99,9 @@ TEST(Vec4Test, Normalized)
 	constexpr Vec4 v{1, 2, 2, 2};
 	const Vec4 norm = v.Normalized();
 	EXPECT_FLOAT_EQ(norm.x, 0.2773501f);
-	EXPECT_FLOAT_EQ(norm.y, 0.5547002);
-	EXPECT_FLOAT_EQ(norm.z, 0.5547002);
-	EXPECT_FLOAT_EQ(norm.w, 0.5547002);
+	EXPECT_FLOAT_EQ(norm.y, 0.5547002f);
+	EXPECT_FLOAT_EQ(norm.z, 0.5547002f);
+	EXPECT_FLOAT_EQ(norm.w, 0.5547002f);
 }
 
 TEST(Vec4Test, NormalizedZeroXZW)
@@ -137,9 +137,9 @@ TEST(Vec4Test, NormalizedZeroXYZW)
 TEST(Vec4Test, Dot)
 {
 	constexpr Vec4 v1{2, 3, 2, -3};
-	constexpr Vec4 v2{1, 3, -7.6, 29.02};
+	constexpr Vec4 v2{1, 3, -7.6f, 29.02f};
 	const float dot = v1.Dot(v2);
-	EXPECT_FLOAT_EQ(dot, -91.259995);
+	EXPECT_FLOAT_EQ(dot, -91.259995f);
 }
 
 TEST(Vec4Test, Distance)

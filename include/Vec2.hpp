@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include <algorithm>
+#include <Vector2.hpp>
 
 namespace stw
 {
@@ -15,6 +16,8 @@ struct Vec2
 	constexpr Vec2(const float x, const float y)
 			: x(x), y(y)
 	{}
+
+	Vec2(const raylib::Vector2 vec) : x(vec.x), y(vec.y) {} // NOLINT(google-explicit-constructor)
 
 	float x;
 	float y;
@@ -66,6 +69,8 @@ struct Vec2
 	friend Vec2 operator*(float scalar, Vec2 vec);
 
 	friend Vec2 operator/(Vec2 vec, float scalar);
+
+	operator raylib::Vector2() const;
 };
 
 constexpr Vec2 Vec2::Lerp(const Vec2 a, const Vec2 b, float t)

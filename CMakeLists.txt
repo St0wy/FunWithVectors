@@ -22,10 +22,12 @@ set(SOURCE
 
 add_library(CoreLib STATIC ${SOURCE})
 target_include_directories(CoreLib PUBLIC include/)
+target_link_libraries(CoreLib PUBLIC raylib raylib_cpp)
+
 if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     target_compile_options(CoreLib PRIVATE "/Wall" "/WX")
 else()
-    target_compile_options(CoreLib PRIVATE -Werror -Wpedantic -Wall -Wextra -Wcast-align -Wcast-qual -Wctor-dtor-privacy -Wdisabled-optimization -Wformat=2 -Winit-self -Wlogical-op -Wmissing-declarations -Wmissing-include-dirs -Wnoexcept -Wold-style-cast -Woverloaded-virtual -Wredundant-decls -Wsign-conversion -Wsign-promo -Wstrict-null-sentinel -Wstrict-overflow=5 -Wswitch-default -Wundef -Werror -Wno-unused )
+    target_compile_options(CoreLib PRIVATE -Werror -Wpedantic -Wall -Wextra -Wcast-align -Wcast-qual -Wctor-dtor-privacy -Wdisabled-optimization -Wformat=2 -Winit-self -Wlogical-op -Wmissing-declarations -Wmissing-include-dirs -Wnoexcept -Wold-style-cast -Woverloaded-virtual -Wredundant-decls -Wsign-conversion -Wsign-promo -Wstrict-null-sentinel -Wstrict-overflow=5 -Wswitch-default -Wundef -Werror -Wno-unused -Wconversion -Wzero-as-null-pointer-constant -Wuseless-cast )
 endif()
 
 # CMake other files
@@ -33,9 +35,15 @@ include(cmake/data.cmake)
 include(cmake/libs.cmake)
 
 # Link Game target with main
-set(MAIN "src/main.cpp")
-add_executable(Game ${MAIN})
+set(GAME_SRC "src/main.cpp")
+add_executable(Game ${GAME_SRC})
 target_link_libraries(Game PRIVATE CoreLib raylib raylib_cpp)
 add_data_folder(Game)
+
+if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    target_compile_options(Game PRIVATE "/Wall" "/WX")
+else()
+    target_compile_options(Game PRIVATE -Werror -Wpedantic -Wall -Wextra -Wcast-align -Wcast-qual -Wctor-dtor-privacy -Wdisabled-optimization -Wformat=2 -Winit-self -Wlogical-op -Wmissing-declarations -Wmissing-include-dirs -Wnoexcept -Wold-style-cast -Woverloaded-virtual -Wredundant-decls -Wsign-conversion -Wsign-promo -Wstrict-null-sentinel -Wstrict-overflow=5 -Wswitch-default -Wundef -Werror -Wno-unused -Wconversion -Wzero-as-null-pointer-constant -Wuseless-cast )
+endif()
 
 add_subdirectory(tests)

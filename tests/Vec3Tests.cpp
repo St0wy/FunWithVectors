@@ -15,7 +15,7 @@ TEST(Vec3Test, DefaultConstructsWithZero)
 
 TEST(Vec3Test, Constructor)
 {
-	constexpr Vec3 v{-10, 42, 6.66};
+	constexpr Vec3 v{-10, 42, 6.66f};
 	EXPECT_EQ(v.x, -10);
 	EXPECT_EQ(v.y, 42);
 	EXPECT_EQ(v.z, 6.66f);
@@ -85,16 +85,16 @@ TEST(Vec3Test, MagnitudeNoZero)
 TEST(Vec3Test, SqrMagnitude)
 {
 	constexpr Vec3 v{3, 5, 6.2f};
-	EXPECT_FLOAT_EQ(v.SqrMagnitude(), 72.440002);
+	EXPECT_FLOAT_EQ(v.SqrMagnitude(), 72.440002f);
 }
 
 TEST(Vec3Test, Normalized)
 {
 	constexpr Vec3 v{1, 2, 2};
 	const Vec3 norm = v.Normalized();
-	EXPECT_FLOAT_EQ(norm.x, 0.33333334);
-	EXPECT_FLOAT_EQ(norm.y, 0.66666669);
-	EXPECT_FLOAT_EQ(norm.z, 0.66666669);
+	EXPECT_FLOAT_EQ(norm.x, 0.33333334f);
+	EXPECT_FLOAT_EQ(norm.y, 0.66666669f);
+	EXPECT_FLOAT_EQ(norm.z, 0.66666669f);
 }
 
 TEST(Vec3Test, NormalizedZeroXZ)
@@ -136,19 +136,19 @@ TEST(Vec3Test, NormalizedZeroXYZ)
 TEST(Vec3Test, Dot)
 {
 	constexpr Vec3 v1{2, 3, 2};
-	constexpr Vec3 v2{1, 3, -7.6};
+	constexpr Vec3 v2{1, 3, -7.6f};
 	const float dot = v1.Dot(v2);
-	EXPECT_FLOAT_EQ(dot, -4.1999998);
+	EXPECT_FLOAT_EQ(dot, -4.1999998f);
 }
 
 TEST(Vec3Test, Cross)
 {
 	constexpr Vec3 v1{2, 3, 2};
-	constexpr Vec3 v2{1, 3, -7.6};
+	constexpr Vec3 v2{1, 3, -7.6f};
 	const Vec3 cross = v1.Cross(v2);
-	EXPECT_FLOAT_EQ(cross.x, -28.799999);
-	EXPECT_FLOAT_EQ(cross.y, 17.200001);
-	EXPECT_FLOAT_EQ(cross.z, -18.200001);
+	EXPECT_FLOAT_EQ(cross.x, -28.799999f);
+	EXPECT_FLOAT_EQ(cross.y, 17.200001f);
+	EXPECT_FLOAT_EQ(cross.z, -18.200001f);
 }
 
 TEST(Vec3Test, Distance)

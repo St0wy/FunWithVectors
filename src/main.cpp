@@ -17,8 +17,11 @@ int main()
 	SetTargetFPS(GetMonitorRefreshRate(GetCurrentMonitor()));
 
 	constexpr float sunScale = 0.3f;
-	auto sunPos = stw::Vec2((WINDOW_WIDTH / 2.0f - sun.GetWidth() * sunScale / 2.0f),
-							(WINDOW_HEIGHT / 2.0f - sun.GetHeight() * sunScale / 2.0f));
+	const float width = static_cast<float>(sun.GetWidth());
+	const float height = static_cast<float>(sun.GetHeight());
+
+	auto sunPos = stw::Vec2((WINDOW_WIDTH / 2.0f - width * sunScale / 2.0f),
+							(WINDOW_HEIGHT / 2.0f - height * sunScale / 2.0f));
 	constexpr float planetScale = 0.2f;
 	constexpr float planetSpeed = 5.0f;
 	constexpr float planetDistance = 300.0f;
@@ -37,12 +40,12 @@ int main()
 
 		DrawText("Moi j'aime les planètes.", 0, 0, 20, LIGHTGRAY);
 
-		sun.Draw({sunPos.x, sunPos.y}, 0.0f, sunScale);
+		sun.Draw(sunPos, 0.0f, sunScale);
 
 		planetPos.x = std::cos(planetAngle) * planetDistance;
 		planetPos.y = std::sin(planetAngle) * planetDistance;
 		planetPos += sunPos;
-		planet.Draw({planetPos.x, planetPos.y}, 0.0f, planetScale);
+		planet.Draw(planetPos, 0.0f, planetScale);
 
 		EndDrawing();
 	}
