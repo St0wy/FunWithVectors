@@ -98,7 +98,7 @@ TEST(Vec4Test, Normalized)
 {
 	constexpr Vec4 v{1, 2, 2, 2};
 	const Vec4 norm = v.Normalized();
-	EXPECT_FLOAT_EQ(norm.x,0.2773501f);
+	EXPECT_FLOAT_EQ(norm.x, 0.2773501f);
 	EXPECT_FLOAT_EQ(norm.y, 0.5547002);
 	EXPECT_FLOAT_EQ(norm.z, 0.5547002);
 	EXPECT_FLOAT_EQ(norm.w, 0.5547002);

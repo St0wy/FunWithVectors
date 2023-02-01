@@ -1,4 +1,5 @@
 #pragma once
+
 #include <string>
 #include <iostream>
 #include <algorithm>
@@ -8,17 +9,18 @@ namespace stw
 struct Vec2
 {
 	constexpr Vec2()
-		: Vec2(0, 0)
+			: Vec2(0, 0)
 	{}
 
 	constexpr Vec2(const float x, const float y)
-		: x(x), y(y)
+			: x(x), y(y)
 	{}
 
 	float x;
 	float y;
 
 	constexpr static Vec2 Lerp(Vec2 a, Vec2 b, float t);
+
 	constexpr static Vec2 Zero();
 
 	[[nodiscard]] float Magnitude() const;
@@ -44,16 +46,25 @@ struct Vec2
 	[[nodiscard]] std::string ToString() const;
 
 	constexpr Vec2 operator+(Vec2 other) const;
+
 	constexpr Vec2 operator-(Vec2 other) const;
+
 	constexpr Vec2 operator+=(Vec2 other);
+
 	constexpr Vec2 operator-=(Vec2 other);
+
 	constexpr Vec2 operator*=(float scalar);
+
 	constexpr Vec2 operator/=(float scalar);
+
 	constexpr bool operator==(Vec2 other) const;
+
 	constexpr Vec2 operator-() const;
 
 	friend Vec2 operator*(Vec2 vec, float scalar);
+
 	friend Vec2 operator*(float scalar, Vec2 vec);
+
 	friend Vec2 operator/(Vec2 vec, float scalar);
 };
 

@@ -34,6 +34,8 @@ struct Vec3
 
 	[[nodiscard]] float Distance(Vec3 other) const;
 
+	[[nodiscard]] float Angle(Vec3 other) const;
+
 	[[nodiscard]] constexpr float Major() const;
 
 	[[nodiscard]] Vec3 NewMagnitude(float newMagnitude) const;
