@@ -1,6 +1,7 @@
 doxygen/
 cmake-build-debug-visual-studio/
 cmake-build-release-visual-studio/
+cmake-buid-release-clang/
 cmake-build-debug/
 cmake-build-release/
 build/
