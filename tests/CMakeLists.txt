@@ -24,9 +24,9 @@ add_executable(VectorTests ${TEST_SOURCE})
 target_link_libraries(VectorTests PRIVATE CoreLib GTest::gtest GTest::gtest_main)
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-    target_compile_options(VectorTests PRIVATE "/Wall" "/WX")
+    target_compile_options(VectorTests PRIVATE ${MSVC_COMPILE_OPTS})
 else()
-    target_compile_options(VectorTests PRIVATE -Werror -Wpedantic -Wall -Wextra -Wcast-align -Wcast-qual -Wctor-dtor-privacy -Wdisabled-optimization -Wformat=2 -Winit-self -Wlogical-op -Wmissing-declarations -Wmissing-include-dirs -Wnoexcept -Wold-style-cast -Woverloaded-virtual -Wredundant-decls -Wsign-conversion -Wsign-promo -Wstrict-null-sentinel -Wstrict-overflow=5 -Wswitch-default -Wundef -Werror -Wno-unused -Wconversion -Wzero-as-null-pointer-constant -Wuseless-cast )
+    target_compile_options(VectorTests PRIVATE ${GCC_CLANG_COMPILE_OPTS} )
 endif()
 
 gtest_discover_tests(VectorTests)
