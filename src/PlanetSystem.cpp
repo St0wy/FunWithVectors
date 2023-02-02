@@ -13,7 +13,7 @@ stw::PlanetSystem::PlanetSystem(std::size_t planetsAmount, stw::Vec2 sunPos, flo
 		const float angle = RandomRange(0.0f, std::numbers::pi_v<float> * 2.0f);
 
 		const Vec2 position = sunPos + stw::Vec2(std::cos(angle) * radius, std::sin(angle) * radius);
-		stw::Planet planet{100000000000.0f, position};
+		stw::Planet planet{position};
 		planet.SetupSpeed(sunPos, sunMass);
 		m_Planets.push_back(planet);
 	}
@@ -21,9 +21,13 @@ stw::PlanetSystem::PlanetSystem(std::size_t planetsAmount, stw::Vec2 sunPos, flo
 
 void stw::PlanetSystem::Update(float deltaTime)
 {
-	for (auto& planet: m_Planets)
+	for (std::size_t i = 0; i < m_Planets.size(); ++i)
 	{
-		planet.Update(m_SunPos, m_SunMass, deltaTime * SIMULATION_SPEED);
+		for (std::size_t j = i + 1; j < m_Planets.size(); ++j)
+		{
+			m_Planets[i].AddGravityForce(m_Planets[j].GetPosition(), m_Planets[j].GetMass());
+		}
+		m_Planets[i].Update(m_SunPos, m_SunMass, deltaTime * SIMULATION_SPEED);
 	}
 }
 

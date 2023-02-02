@@ -3,11 +3,9 @@
 
 void stw::Planet::Update(Vec2 sunPos, float sunMass, float deltaTime)
 {
-	const Vec2 planetToSun = sunPos - m_Position;
-	const float radius = planetToSun.Magnitude();
-	const float forceAmount = (G * sunMass * m_Mass) / (radius * radius);
-	const Vec2 force = (planetToSun / radius) * forceAmount;
-	const Vec2 acceleration = force / m_Mass;
+	AddGravityForce(sunPos, sunMass);
+	const Vec2 acceleration = m_Force / m_Mass;
+	m_Force = Vec2::Zero();
 	m_Velocity += acceleration * deltaTime;
 	m_Position += m_Velocity * deltaTime;
 }
@@ -28,5 +26,14 @@ void stw::Planet::SetupSpeed(stw::Vec2 sunPos, float sunMass)
 void stw::Planet::Draw() const
 {
 	DrawCircle(static_cast<int>(m_Position.x), static_cast<int>(m_Position.y), m_Radius, m_Color);
+}
+
+void stw::Planet::AddGravityForce(stw::Vec2 pos, float mass)
+{
+	const Vec2 planetToSun = pos - m_Position;
+	const float radius = planetToSun.Magnitude();
+	const float forceAmount = (G * mass * m_Mass) / (radius * radius);
+	const Vec2 force = (planetToSun / radius) * forceAmount;
+	m_Force += force;
 }
 
