@@ -1,5 +1,5 @@
 // ReSharper disable CppClangTidyClangDiagnosticFloatEqual
-#include "Vec2.hpp"
+#include "math/Vec2.hpp"
 
 #include <sstream>
 #include <cmath>
@@ -19,8 +19,7 @@ Vec2 Vec2::Normalized() const
 	}
 
 	const float invMag = 1.0f / Magnitude();
-	const Vec2 newVec = {x * invMag, y * invMag};
-	return newVec;
+	return {x * invMag, y * invMag};
 }
 
 float Vec2::Distance(const Vec2 other) const

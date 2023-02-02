@@ -1,5 +1,5 @@
 // ReSharper disable CppClangTidyClangDiagnosticFloatEqual
-#include "Vec3.hpp"
+#include "math/Vec3.hpp"
 
 #include <sstream>
 #include <cmath>

@@ -15,17 +15,20 @@ set(CLANG_COMPILE_OPTS -Werror -Wpedantic -Wall -Wextra -Wcast-align -Wcast-qual
 
 # Common Lib
 set(SOURCE
-        "src/Vec2.cpp"
-        "src/Vec3.cpp"
-        "src/Vec4.cpp"
-        "include/Vec2.hpp"
-        "include/Vec3.hpp"
-        "include/Vec4.hpp"
-        )
+        "src/math/Vec2.cpp"
+        "src/math/Vec3.cpp"
+        "src/math/Vec4.cpp"
+        "include/math/Vec2.hpp"
+        "include/math/Vec3.hpp"
+        "include/math/Vec4.hpp"
+        "include/Planet.hpp"
+        "src/Planet.cpp"
+        "include/Consts.hpp"
+        "include/math/Utils.hpp" include/PlanetSystem.hpp src/PlanetSystem.cpp)
 
 add_library(CoreLib STATIC ${SOURCE})
 target_include_directories(CoreLib PUBLIC include/)
-target_link_libraries(CoreLib PUBLIC raylib raylib_cpp)
+target_link_libraries(CoreLib PUBLIC raylib raylib_cpp spdlog)
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     target_compile_options(CoreLib PRIVATE ${MSVC_COMPILE_OPTS})
@@ -36,14 +39,12 @@ else()
 endif()
 
 # CMake other files
-include(cmake/data.cmake)
 include(cmake/libs.cmake)
 
 # Link Game target with main
 set(GAME_SRC "src/main.cpp")
 add_executable(Game ${GAME_SRC})
-target_link_libraries(Game PRIVATE CoreLib raylib raylib_cpp)
-add_data_folder(Game)
+target_link_libraries(Game PRIVATE CoreLib raylib raylib_cpp spdlog)
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     target_compile_options(CoreLib PRIVATE ${MSVC_COMPILE_OPTS})

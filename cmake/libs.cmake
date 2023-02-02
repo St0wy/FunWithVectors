@@ -25,3 +25,18 @@ FetchContent_Declare(
         SYSTEM
 )
 FetchContent_MakeAvailable(raylib_cpp)
+
+FetchContent_Declare(
+        spdlog
+        GIT_REPOSITORY https://github.com/gabime/spdlog.git
+        GIT_TAG v1.11.0
+        GIT_PROGRESS TRUE
+        SYSTEM
+)
+FetchContent_MakeAvailable(spdlog)
+
+if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    target_compile_options(raylib PRIVATE "/W0")
+else()
+    target_compile_options(raylib PRIVATE "-w /EHs")
+endif()

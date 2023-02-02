@@ -1,9 +1,4 @@
 doxygen/
-cmake-build-debug-visual-studio/
-cmake-build-release-visual-studio/
-cmake-build-debug/
-cmake-build-release/
-cmake-build-release-clang/
 build/
 
 ## Ignore Visual Studio temporary files, build results, and
@@ -42,6 +37,7 @@ bld/
 [Ll]ogs/
 [Bb]uild/
 out/build/
+cmake-build-*/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/

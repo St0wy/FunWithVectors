@@ -1,4 +1,4 @@
-#include "Vec3.hpp"
+#include "math/Vec3.hpp"
 
 #include <gtest/gtest.h>
 #include <numbers>
