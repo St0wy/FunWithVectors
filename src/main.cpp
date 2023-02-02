@@ -1,9 +1,7 @@
 #include <raylib-cpp.hpp>
 #include <spdlog/spdlog.h>
-#include <vector>
 
 #include "math/Vec2.hpp"
-#include "Planet.hpp"
 #include "PlanetSystem.hpp"
 
 constexpr std::int32_t WINDOW_WIDTH = 1000;

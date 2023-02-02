@@ -1,6 +1,3 @@
-//
-// Created by stowy on 02/02/2023.
-//
 #include "Planet.hpp"
 #include "Consts.hpp"
 
