@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include <iostream>
 #include <algorithm>
 #include "Vector2.hpp"
 #include "spdlog/fmt/ostr.h"

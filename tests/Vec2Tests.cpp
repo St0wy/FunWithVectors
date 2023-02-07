@@ -1,7 +1,7 @@
-#include "math/Vec2.hpp"
-
-#include <gtest/gtest.h>
 #include <numbers>
+#include <gtest/gtest.h>
+
+#include "math/Vec2.hpp"
 
 namespace stw
 {

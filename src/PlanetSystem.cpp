@@ -3,8 +3,8 @@
 #include <numbers>
 #include "math/Utils.hpp"
 
-stw::PlanetSystem::PlanetSystem(std::size_t planetsAmount, stw::Vec2 sunPos, float sunMass) : m_SunPos(sunPos),
-																							  m_SunMass(sunMass)
+stw::PlanetSystem::PlanetSystem(const std::size_t planetsAmount, const Vec2 sunPos, const float sunMass) : m_SunMass(sunMass),
+                                                                                                                m_SunPos(sunPos)
 {
 	m_Planets.reserve(planetsAmount);
 	for (std::size_t i = 0; i < planetsAmount; ++i)

@@ -13,7 +13,7 @@ class Planet
 public:
 	static constexpr float BASE_MASS = 100000000000.0f;
 
-	Planet() : Planet({0.0f, 0.0f})
+	Planet() : Planet({ 0.0f, 0.0f })
 	{}
 
 	explicit Planet(Vec2 position) : m_Position(position)
@@ -21,15 +21,15 @@ public:
 		m_Radius = RandomRange(7.0f, 17.0f);
 		m_Mass = BASE_MASS * m_Radius;
 		const auto r = static_cast<unsigned char>(
-				RandomRange(static_cast<unsigned short>(50), static_cast<unsigned short>(255)));
+			RandomRange(static_cast<unsigned short>(50), static_cast<unsigned short>(255)));
 		const auto g = static_cast<unsigned char>(
-				RandomRange(static_cast<unsigned short>(50), static_cast<unsigned short>(255)));
+			RandomRange(static_cast<unsigned short>(50), static_cast<unsigned short>(255)));
 		const auto b = static_cast<unsigned char>(
-				RandomRange(static_cast<unsigned short>(50), static_cast<unsigned short>(255)));
+			RandomRange(static_cast<unsigned short>(50), static_cast<unsigned short>(255)));
 		m_Color = raylib::Color(r, g, b);
 	}
 
-	Planet(Vec2 position, float mass, float radius) : m_Mass(mass), m_Position(position), m_Radius(radius)
+	Planet(Vec2 position, float mass, float radius) : m_Radius(radius), m_Mass(mass), m_Position(position)
 	{}
 
 	void SetupSpeed(Vec2 sunPos, float sunMass);
@@ -41,13 +41,19 @@ public:
 	void Draw() const;
 
 	[[nodiscard]] Vec2 GetPosition() const
-	{ return m_Position; }
+	{
+		return m_Position;
+	}
 
 	[[nodiscard]] Vec2 GetVelocity() const
-	{ return m_Velocity; }
+	{
+		return m_Velocity;
+	}
 
 	[[nodiscard]] float GetMass() const
-	{ return m_Mass; }
+	{
+		return m_Mass;
+	}
 
 private:
 	float m_Radius{};

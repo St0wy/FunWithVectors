@@ -19,16 +19,9 @@ set(TEST_SOURCE
         "Vec2Tests.cpp"
         "Vec3Tests.cpp"
         "Vec4Tests.cpp"
+        "Vec2xNTests.cpp"
         )
 add_executable(VectorTests ${TEST_SOURCE})
 target_link_libraries(VectorTests PRIVATE CoreLib GTest::gtest GTest::gtest_main)
-
-if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-    target_compile_options(CoreLib PRIVATE ${MSVC_COMPILE_OPTS})
-elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GCC")
-    target_compile_options(CoreLib PRIVATE ${GCC_COMPILE_OPTS} )
-else()
-    target_compile_options(CoreLib PRIVATE ${CLANG_COMPILE_OPTS} )
-endif()
 
 gtest_discover_tests(VectorTests)
