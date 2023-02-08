@@ -12,22 +12,25 @@ set(OpenGL_GL_PREFERENCE GLVND)
 
 # Common Lib
 set(SOURCE
-        "src/math/Vec2.cpp"
-        "src/math/Vec3.cpp"
-        "src/math/Vec4.cpp"
-        "include/math/Vec2.hpp"
-        "include/math/Vec3.hpp"
-        "include/math/Vec4.hpp"
-        "include/math/Vec2xN.hpp"
-        "include/Planet.hpp"
-        "src/Planet.cpp"
-        "include/Consts.hpp"
-        "include/math/Utils.hpp" 
-        "include/PlanetSystem.hpp" 
-        "src/PlanetSystem.cpp"
-        "include/intrinsics.hpp")
+    "src/math/Vec2.cpp"
+    "src/math/Vec3.cpp"
+    "src/math/Vec4.cpp"
+    "include/math/Vec2.hpp"
+    "include/math/Vec3.hpp"
+    "include/math/Vec4.hpp"
+    "include/math/Vec2xN.hpp"
+    "include/Planet.hpp"
+    "src/Planet.cpp"
+    "include/Consts.hpp"
+    "include/math/Utils.hpp" 
+    "include/PlanetSystem.hpp" 
+    "src/PlanetSystem.cpp"
+    "include/intrinsics.hpp"
+    "src/SimdPlanetSystem.cpp"
+    "include/SimdPlanetSystem.hpp"
+)
 
-add_library(CoreLib STATIC ${SOURCE})
+add_library(CoreLib STATIC ${SOURCE} )
 target_include_directories(CoreLib PUBLIC include/)
 target_link_libraries(CoreLib PUBLIC raylib raylib_cpp spdlog)
 
@@ -44,7 +47,7 @@ include(cmake/libs.cmake)
 
 # Link Game target with main
 set(GAME_SRC "src/main.cpp")
-add_executable(Game ${GAME_SRC})
+add_executable(Game ${GAME_SRC} "src/SimdPlanetSystem.cpp")
 target_link_libraries(Game PRIVATE CoreLib raylib raylib_cpp spdlog)
 
 add_subdirectory(tests)

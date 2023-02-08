@@ -24,18 +24,6 @@
       "inheritEnvironments": [ "msvc_x64_x64" ],
       "cmakeExecutable": "C:\\Users\\stowy\\scoop\\apps\\cmake\\3.25.2\\bin\\cmake.exe",
       "intelliSenseMode": "windows-msvc-x64"
-    },
-    {
-      "name": "x64-Clang-Release",
-      "generator": "Ninja",
-      "configurationType": "Release",
-      "buildRoot": "${projectDir}\\out\\build\\${name}",
-      "installRoot": "${projectDir}\\out\\install\\${name}",
-      "cmakeExecutable": "C:/Users/stowy/scoop/apps/cmake/3.25.2/bin/cmake.exe",
-      "cmakeCommandArgs": "",
-      "buildCommandArgs": "",
-      "ctestCommandArgs": "",
-      "inheritEnvironments": [ "clang_cl_x64_x64" ]
     }
   ]
 }

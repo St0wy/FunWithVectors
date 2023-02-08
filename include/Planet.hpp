@@ -12,13 +12,15 @@ class Planet
 {
 public:
 	static constexpr float BASE_MASS = 100000000000.0f;
+	static constexpr float MIN_RADIUS = 7.0f;
+	static constexpr float MAX_RADIUS = 17.0f;
 
 	Planet() : Planet({ 0.0f, 0.0f })
 	{}
 
-	explicit Planet(Vec2 position) : m_Position(position)
+	explicit Planet(const Vec2 position) : m_Position(position)
 	{
-		m_Radius = RandomRange(7.0f, 17.0f);
+		m_Radius = RandomRange(MIN_RADIUS, MAX_RADIUS);
 		m_Mass = BASE_MASS * m_Radius;
 		const auto r = static_cast<unsigned char>(
 			RandomRange(static_cast<unsigned short>(50), static_cast<unsigned short>(255)));
@@ -29,7 +31,7 @@ public:
 		m_Color = raylib::Color(r, g, b);
 	}
 
-	Planet(Vec2 position, float mass, float radius) : m_Radius(radius), m_Mass(mass), m_Position(position)
+	Planet(const Vec2 position, const float mass, const float radius) : m_Radius(radius), m_Mass(mass), m_Position(position)
 	{}
 
 	void SetupSpeed(Vec2 sunPos, float sunMass);

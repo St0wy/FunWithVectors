@@ -6,7 +6,6 @@
 
 namespace stw
 {
-
 class PlanetSystem
 {
 public:
@@ -16,12 +15,11 @@ public:
 	PlanetSystem(std::size_t planetsAmount, Vec2 sunPos, float sunMass);
 
 	void Update(float deltaTime);
-	void Draw();
+	void Draw() const;
 
 private:
 	std::vector<Planet> m_Planets;
 	float m_SunMass;
 	Vec2 m_SunPos;
 };
-
 } // stw

@@ -3,6 +3,7 @@
 #include <span>
 
 #include "intrinsics.hpp"
+#include "Utils.hpp"
 
 namespace stw
 {
@@ -10,22 +11,28 @@ template<std::size_t N>
 struct alignas(N * sizeof(float)) Vec2xN
 {
 public:
-	Vec2xN()
-	{
-		for (std::size_t i = 0; i < N; ++i)
-		{
-			m_X[i] = rand();
-			m_Y[i] = rand();
-		}
-	}
+	constexpr Vec2xN() = default;
 
-	Vec2xN(const std::array<float, N>& x, const std::array<float, N>& y) : m_X(x), m_Y(y) {}
+	constexpr Vec2xN(const std::array<float, N>& x, const std::array<float, N>& y) : m_X(x), m_Y(y) {}
 
 	constexpr std::span<float, N> GetX() { return m_X; }
 	constexpr std::span<float, N> GetY() { return m_Y; }
 	constexpr float AtX(std::size_t i) { return m_X[i]; }
 	constexpr float AtY(std::size_t i) { return m_Y[i]; }
+	// ReSharper disable once CppMemberFunctionMayBeStatic
 	constexpr std::size_t size() { return N; }
+	static constexpr Vec2xN<N> NewRandom()
+	{
+		Vec2xN<N> vec;
+		for (std::size_t i = 0; i < N; ++i)
+		{
+			vec.m_X[i] = RandomRange(-100.0f, 100.0f);
+			vec.m_Y[i] = RandomRange(-100.0f, 100.0f);
+		}
+
+		return vec;
+	}
+
 
 	Vec2xN operator*=(float scalar)
 	{

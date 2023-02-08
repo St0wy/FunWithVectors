@@ -13,7 +13,7 @@ static void BM_VectorMultiplyAOS(benchmark::State& state)
 
 	for (std::size_t i = 0; i < LENGTH; ++i)
 	{
-		vectors.emplace_back(rand(), rand());
+		vectors.emplace_back(RandomRange(-100.0f, 100.0f), RandomRange(-100.0f, 100.0f));
 	}
 
 	for (auto _ : state)
@@ -26,16 +26,16 @@ static void BM_VectorMultiplyAOS(benchmark::State& state)
 }
 BENCHMARK(BM_VectorMultiplyAOS);
 
-static void BM_VectorMultiplySOA(benchmark::State& state)
+static void BM_VectorMultiplySOAx2048(benchmark::State& state)
 {
-	stw::Vec2xN<LENGTH> vectors;
+	auto vectors = stw::Vec2xN<2048>::NewRandom();
 
 	for (auto _ : state)
 	{
 		benchmark::DoNotOptimize(vectors *= 6.66f);
 	}
 }
-BENCHMARK(BM_VectorMultiplySOA);
+BENCHMARK(BM_VectorMultiplySOAx2048);
 
 
 static void BM_VectorMultiplyAOSOAx4(benchmark::State& state)
@@ -46,7 +46,7 @@ static void BM_VectorMultiplyAOSOAx4(benchmark::State& state)
 
 	for (std::size_t i = 0; i < len; ++i)
 	{
-		vectors.emplace_back();
+		vectors.emplace_back(stw::Vec2x4::NewRandom());
 	}
 
 	for (auto _ : state)
@@ -67,7 +67,7 @@ static void BM_VectorMultiplyAOSOAx8(benchmark::State& state)
 
 	for (std::size_t i = 0; i < len; ++i)
 	{
-		vectors.emplace_back();
+		vectors.emplace_back(stw::Vec2x8::NewRandom());
 	}
 
 	for (auto _ : state)
@@ -87,7 +87,7 @@ static void BM_VectorMultiplyAOSSize4(benchmark::State& state)
 
 	for (std::size_t i = 0; i < 4; ++i)
 	{
-		vectors.emplace_back(rand(), rand());
+		vectors.emplace_back(RandomRange(-100.0f, 100.0f), RandomRange(-100.0f, 100.0f));
 	}
 
 	for (auto _ : state)
@@ -102,7 +102,7 @@ BENCHMARK(BM_VectorMultiplyAOSSize4);
 
 static void BM_VectorMultiplySOASize4(benchmark::State& state)
 {
-	stw::Vec2x4 vectors;
+	stw::Vec2x4 vectors = stw::Vec2x4::NewRandom();
 
 	for (auto _ : state)
 	{
@@ -118,7 +118,7 @@ static void BM_VectorMultiplyAOSSize8(benchmark::State& state)
 
 	for (std::size_t i = 0; i < 8; ++i)
 	{
-		vectors.emplace_back(rand(), rand());
+		vectors.emplace_back(RandomRange(-100.0f, 100.0f), RandomRange(-100.0f, 100.0f));
 	}
 
 	for (auto _ : state)
@@ -133,7 +133,7 @@ BENCHMARK(BM_VectorMultiplyAOSSize8);
 
 static void BM_VectorMultiplySOASize8(benchmark::State& state)
 {
-	stw::Vec2x8 vectors;
+	stw::Vec2x8 vectors = stw::Vec2x8::NewRandom();
 
 	for (auto _ : state)
 	{
