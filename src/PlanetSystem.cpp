@@ -24,10 +24,10 @@ void stw::PlanetSystem::Update(const float deltaTime)
 {
 	for (std::size_t i = 0; i < m_Planets.size(); ++i)
 	{
-		for (std::size_t j = i + 1; j < m_Planets.size(); ++j)
-		{
-			m_Planets[i].AddGravityForce(m_Planets[j].GetPosition(), m_Planets[j].GetMass());
-		}
+		//for (std::size_t j = i + 1; j < m_Planets.size(); ++j)
+		//{
+		//	m_Planets[i].AddGravityForce(m_Planets[j].GetPosition(), m_Planets[j].GetMass());
+		//}
 
 		m_Planets[i].Update(m_SunPos, m_SunMass, deltaTime * SIMULATION_SPEED);
 	}

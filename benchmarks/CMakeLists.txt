@@ -11,9 +11,11 @@ FetchContent_Declare(
 set(BENCHMARK_DOWNLOAD_DEPENDENCIES ON)
 FetchContent_MakeAvailable(benchmark)
 
-set(BENCH_SOURCE "Vec2Bench.cpp")
-add_executable(VectorBenchmarks ${BENCH_SOURCE})
+add_executable(VectorBenchmarks "Vec2Bench.cpp")
 target_link_libraries(VectorBenchmarks PRIVATE CoreLib benchmark::benchmark)
+
+add_executable(PlanetsBenchmarks "PlanetsBench.cpp")
+target_link_libraries(PlanetsBenchmarks PRIVATE CoreLib benchmark::benchmark)
 
 if(MSVC)
     target_compile_options(VectorBenchmarks PUBLIC /arch:AVX2 /Oi /GR- /EHs-c- /FA /Oy- /GL)

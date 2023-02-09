@@ -26,7 +26,6 @@ set(SOURCE
     "include/PlanetSystem.hpp" 
     "src/PlanetSystem.cpp"
     "include/intrinsics.hpp"
-    "src/SimdPlanetSystem.cpp"
     "include/SimdPlanetSystem.hpp"
 )
 
@@ -47,8 +46,12 @@ include(cmake/libs.cmake)
 
 # Link Game target with main
 set(GAME_SRC "src/main.cpp")
-add_executable(Game ${GAME_SRC} "src/SimdPlanetSystem.cpp")
+add_executable(Game ${GAME_SRC})
 target_link_libraries(Game PRIVATE CoreLib raylib raylib_cpp spdlog)
+
+set(GAME_SRC_SIMD "src/main_simd.cpp")
+add_executable(GameSimd ${GAME_SRC_SIMD})
+target_link_libraries(GameSimd PRIVATE CoreLib raylib raylib_cpp spdlog)
 
 add_subdirectory(tests)
 add_subdirectory(benchmarks)

@@ -10,14 +10,15 @@ namespace stw
 struct Vec2
 {
 	constexpr Vec2()
-			: Vec2(0, 0)
+		: Vec2(0, 0)
 	{}
 
 	constexpr Vec2(const float x, const float y)
-			: x(x), y(y)
+		: x(x), y(y)
 	{}
 
-	Vec2(const raylib::Vector2 vec) : x(vec.x), y(vec.y) {} // NOLINT(google-explicit-constructor)
+	// ReSharper disable once CppNonExplicitConvertingConstructor
+	Vec2(const raylib::Vector2 vec) : x(vec.x), y(vec.y) {}
 
 	float x;
 	float y;
@@ -84,7 +85,7 @@ constexpr Vec2 Vec2::Lerp(const Vec2 a, const Vec2 b, float t)
 
 constexpr Vec2 Vec2::Zero()
 {
-	return {0, 0};
+	return { 0, 0 };
 }
 
 constexpr float Vec2::SqrMagnitude() const
@@ -105,22 +106,22 @@ constexpr float Vec2::Major() const
 
 constexpr Vec2 Vec2::PositivePerpendicular() const
 {
-	return {-y, x};
+	return { -y, x };
 }
 
 constexpr Vec2 Vec2::NegativePerpendicular() const
 {
-	return {y, -x};
+	return { y, -x };
 }
 
 constexpr Vec2 Vec2::operator+(const Vec2 other) const
 {
-	return {this->x + other.x, this->y + other.y};
+	return { this->x + other.x, this->y + other.y };
 }
 
 constexpr Vec2 Vec2::operator-(const Vec2 other) const
 {
-	return {this->x - other.x, this->y - other.y};
+	return { this->x - other.x, this->y - other.y };
 }
 
 constexpr Vec2 Vec2::operator+=(const Vec2 other)
@@ -158,7 +159,7 @@ constexpr bool Vec2::operator==(const Vec2 other) const
 
 constexpr Vec2 Vec2::operator-() const
 {
-	return {-x, -y};
+	return { -x, -y };
 }
 
 std::ostream& operator<<(std::ostream& os, Vec2 vec);

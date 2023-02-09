@@ -1,7 +1,7 @@
 #include <raylib-cpp.hpp>
 #include <spdlog/spdlog.h>
 
-#include "PlanetSystem.hpp"
+#include "SimdPlanetSystem.hpp"
 #include "math/Vec2.hpp"
 
 constexpr std::int32_t WINDOW_WIDTH = 1000;
@@ -20,9 +20,9 @@ int main()
 	const stw::Vec2 windowSizeFloat{ static_cast<float>(window.GetWidth()),
 							  static_cast<float>(window.GetHeight()) };
 	const auto sunPos = stw::Vec2(windowSizeFloat / 2.0f);
-	constexpr float sunMass = 100000000000000.0f;
 	constexpr std::size_t planetAmount = 10'000;
-	stw::PlanetSystem ps{ planetAmount, sunPos, sunMass };
+	stw::SimdPlanetSystem<8> ps{ planetAmount, sunPos };
+	ps.SetupSpeeds();
 
 	while (!window.ShouldClose()) // Detect window close button or ESC key
 	{

@@ -1,7 +1,7 @@
 #include "Planet.hpp"
 #include "Consts.hpp"
 
-void stw::Planet::Update(Vec2 sunPos, float sunMass, float deltaTime)
+void stw::Planet::Update(const Vec2 sunPos, const float sunMass, const float deltaTime)
 {
 	AddGravityForce(sunPos, sunMass);
 	const Vec2 acceleration = m_Force / m_Mass;
@@ -10,7 +10,7 @@ void stw::Planet::Update(Vec2 sunPos, float sunMass, float deltaTime)
 	m_Position += m_Velocity * deltaTime;
 }
 
-void stw::Planet::SetupSpeed(stw::Vec2 sunPos, float sunMass)
+void stw::Planet::SetupSpeed(const Vec2 sunPos, const float sunMass)
 {
 	const Vec2 planetToSun = sunPos - m_Position;
 	const float radius = planetToSun.Magnitude();
@@ -28,7 +28,7 @@ void stw::Planet::Draw() const
 	DrawCircle(static_cast<int>(m_Position.x), static_cast<int>(m_Position.y), m_Radius, m_Color);
 }
 
-void stw::Planet::AddGravityForce(stw::Vec2 pos, float mass)
+void stw::Planet::AddGravityForce(const Vec2 pos, const float mass)
 {
 	const Vec2 planetToSun = pos - m_Position;
 	const float radius = planetToSun.Magnitude();
