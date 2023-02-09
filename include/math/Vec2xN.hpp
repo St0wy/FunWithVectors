@@ -36,12 +36,15 @@ public:
 	static constexpr Vec2xN<N> NewRandom();
 	[[nodiscard]] std::array<float, N> Magnitudes() const;
 	[[nodiscard]] constexpr Vec2xN<N> PositivePerpendicular() const;
+	Vec2xN<N>& BenchMult(const Vec2xN<N>& other);
+	Vec2xN<N>& BenchMultIntrinsics(const Vec2xN<N>& other);
 
 	// ReSharper disable once CppMemberFunctionMayBeStatic
 	constexpr std::size_t size() { return N; }
 	void Reset();
 
-	Vec2xN operator*=(float scalar);
+	Vec2xN& operator*=(float scalar);
+	Vec2xN& operator+=(const Vec2xN& other);
 	Vec2xN operator*(float scalar) const;
 	Vec2xN operator*(const Vec2xN& other) const;
 	Vec2xN operator*(const std::valarray<float>& valarray) const;
@@ -49,7 +52,6 @@ public:
 	Vec2xN operator+(const Vec2xN& other) const;
 	Vec2xN operator/(const std::valarray<float>& valarray) const;
 	Vec2xN operator/(const std::array<float, N>& array) const;
-	Vec2xN operator+=(const Vec2xN& other);
 
 private:
 	std::array<float, N> m_X{};
@@ -95,6 +97,36 @@ std::array<float, N> Vec2xN<N>::Magnitudes() const
 }
 
 template <std::size_t N>
+Vec2xN<N>& Vec2xN<N>::BenchMult(const Vec2xN<N>& other)
+{
+	for (std::size_t i = 0; i < N; ++i)
+	{
+		m_X[i] *= other.m_X[i];
+		m_Y[i] *= other.m_Y[i];
+	}
+
+	return *this;
+}
+
+template <std::size_t N>
+Vec2xN<N>& Vec2xN<N>::BenchMultIntrinsics(const Vec2xN<N>& other)
+{
+	auto x = _mm256_load_ps(m_X.data());
+	auto y = _mm256_load_ps(m_Y.data());
+
+	const auto otherX = _mm256_load_ps(other.m_X.data());
+	const auto otherY = _mm256_load_ps(other.m_Y.data());
+
+	x = _mm256_add_ps(x, otherX);
+	y = _mm256_add_ps(y, otherY);
+
+	_mm256_store_ps(m_X.data(), x);
+	_mm256_store_ps(m_Y.data(), y);
+
+	return *this;
+}
+
+template <std::size_t N>
 void Vec2xN<N>::Reset()
 {
 	for (std::size_t i = 0; i < N; ++i)
@@ -105,7 +137,7 @@ void Vec2xN<N>::Reset()
 }
 
 template<std::size_t N>
-Vec2xN<N> Vec2xN<N>::operator*=(float scalar)
+Vec2xN<N>& Vec2xN<N>::operator*=(float scalar)
 {
 	for (std::size_t i = 0; i < N; ++i)
 	{
@@ -209,7 +241,7 @@ Vec2xN<N> Vec2xN<N>::operator/(const std::array<float, N>& array) const
 }
 
 template <std::size_t N>
-Vec2xN<N> Vec2xN<N>::operator+=(const Vec2xN& other)
+Vec2xN<N>& Vec2xN<N>::operator+=(const Vec2xN& other)
 {
 	for (std::size_t i = 0; i < N; ++i)
 	{
@@ -217,7 +249,7 @@ Vec2xN<N> Vec2xN<N>::operator+=(const Vec2xN& other)
 		m_Y[i] += other.m_Y[i];
 	}
 
-	return (*this);
+	return *this;
 }
 
 using Vec2x4 = Vec2xN<4>;
@@ -225,7 +257,7 @@ using Vec2x8 = Vec2xN<8>;
 
 #ifdef __SSE__
 template<>
-inline Vec2x4 Vec2x4::operator*=(const float scalar)
+inline Vec2x4& Vec2x4::operator*=(const float scalar)
 {
 	const auto scalarMm = _mm_load1_ps(&scalar);
 
@@ -240,11 +272,29 @@ inline Vec2x4 Vec2x4::operator*=(const float scalar)
 
 	return *this;
 }
+
+template <>
+inline Vec2x4& Vec2x4::operator+=(const Vec2x4& other)
+{
+	auto x = _mm_load_ps(m_X.data());
+	auto y = _mm_load_ps(m_Y.data());
+
+	const auto otherX = _mm_load_ps(other.m_X.data());
+	const auto otherY = _mm_load_ps(other.m_Y.data());
+
+	x = _mm_add_ps(x, otherX);
+	y = _mm_add_ps(y, otherY);
+
+	_mm_store_ps(m_X.data(), x);
+	_mm_store_ps(m_Y.data(), y);
+
+	return *this;
+}
 #endif
 
 #ifdef __AVX__
 template<>
-inline Vec2x8 Vec2x8::operator*=(float scalar)
+inline Vec2x8& Vec2x8::operator*=(float scalar)
 {
 	const auto scalarMm = _mm256_broadcast_ss(&scalar);
 
@@ -253,6 +303,24 @@ inline Vec2x8 Vec2x8::operator*=(float scalar)
 
 	x = _mm256_mul_ps(x, scalarMm);
 	y = _mm256_mul_ps(y, scalarMm);
+
+	_mm256_store_ps(m_X.data(), x);
+	_mm256_store_ps(m_Y.data(), y);
+
+	return *this;
+}
+
+template <>
+inline Vec2x8& Vec2x8::operator+=(const Vec2x8& other)
+{
+	auto x = _mm256_load_ps(m_X.data());
+	auto y = _mm256_load_ps(m_Y.data());
+
+	const auto otherX = _mm256_load_ps(other.m_X.data());
+	const auto otherY = _mm256_load_ps(other.m_Y.data());
+
+	x = _mm256_add_ps(x, otherX);
+	y = _mm256_add_ps(y, otherY);
 
 	_mm256_store_ps(m_X.data(), x);
 	_mm256_store_ps(m_Y.data(), y);

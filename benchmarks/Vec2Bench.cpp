@@ -80,6 +80,30 @@ static void BM_VectorMultiplyAOSOAx8(benchmark::State& state)
 }
 BENCHMARK(BM_VectorMultiplyAOSOAx8);
 
+static void BM_VectorMultiplyAOSOALoop8(benchmark::State& state)
+{
+	stw::Vec2x8 vectors = stw::Vec2x8::NewRandom();
+	const stw::Vec2x8 other = stw::Vec2x8::NewRandom();
+
+	for (auto _ : state)
+	{
+		benchmark::DoNotOptimize(vectors.BenchMult(other));
+	}
+}
+BENCHMARK(BM_VectorMultiplyAOSOALoop8);
+
+static void BM_VectorMultiplyAOSOAIntrinsics8(benchmark::State& state)
+{
+	stw::Vec2x8 vectors = stw::Vec2x8::NewRandom();
+	const stw::Vec2x8 other = stw::Vec2x8::NewRandom();
+
+	for (auto _ : state)
+	{
+		benchmark::DoNotOptimize(vectors.BenchMultIntrinsics(other));
+	}
+}
+BENCHMARK(BM_VectorMultiplyAOSOAIntrinsics8);
+
 static void BM_VectorMultiplyAOSSize4(benchmark::State& state)
 {
 	std::vector<stw::Vec2> vectors;

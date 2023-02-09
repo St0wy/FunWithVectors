@@ -5,7 +5,7 @@
 
 constexpr float DELTA_TIME = 1.0f / 60.0f;
 constexpr std::int64_t MIN_PLANETS = 1;
-constexpr std::int64_t MAX_PLANETS = 1 << 20;
+constexpr std::int64_t MAX_PLANETS = 1 << 19;
 
 static void BM_Planets(benchmark::State& state)
 {
@@ -59,57 +59,57 @@ static void BM_PlanetsSIMDx16(benchmark::State& state)
 	}
 }
 BENCHMARK(BM_PlanetsSIMDx16)->Range(MIN_PLANETS, MAX_PLANETS);
-
-static void BM_PlanetsSIMDx32(benchmark::State& state)
-{
-	const std::size_t planetsAmount = state.range(0);
-	constexpr auto sunPos = stw::Vec2(0, 0);
-	stw::SimdPlanetSystem<32> ps{ planetsAmount, sunPos };
-
-	for (auto _ : state)
-	{
-		ps.Update(DELTA_TIME);
-	}
-}
-BENCHMARK(BM_PlanetsSIMDx32)->Range(MIN_PLANETS, MAX_PLANETS);
-
-static void BM_PlanetsSIMDx64(benchmark::State& state)
-{
-	const std::size_t planetsAmount = state.range(0);
-	constexpr auto sunPos = stw::Vec2(0, 0);
-	stw::SimdPlanetSystem<64> ps{ planetsAmount, sunPos };
-
-	for (auto _ : state)
-	{
-		ps.Update(DELTA_TIME);
-	}
-}
-BENCHMARK(BM_PlanetsSIMDx64)->Range(MIN_PLANETS, MAX_PLANETS);
-
-static void BM_PlanetsSIMDx128(benchmark::State& state)
-{
-	const std::size_t planetsAmount = state.range(0);
-	constexpr auto sunPos = stw::Vec2(0, 0);
-	stw::SimdPlanetSystem<128> ps{ planetsAmount, sunPos };
-
-	for (auto _ : state)
-	{
-		ps.Update(DELTA_TIME);
-	}
-}
-BENCHMARK(BM_PlanetsSIMDx128)->Range(MIN_PLANETS, MAX_PLANETS);
-
-static void BM_PlanetsSIMDx256(benchmark::State& state)
-{
-	const std::size_t planetsAmount = state.range(0);
-	constexpr auto sunPos = stw::Vec2(0, 0);
-	stw::SimdPlanetSystem<256> ps{ planetsAmount, sunPos };
-
-	for (auto _ : state)
-	{
-		ps.Update(DELTA_TIME);
-	}
-}
-BENCHMARK(BM_PlanetsSIMDx256)->Range(MIN_PLANETS, MAX_PLANETS);
+//
+//static void BM_PlanetsSIMDx32(benchmark::State& state)
+//{
+//	const std::size_t planetsAmount = state.range(0);
+//	constexpr auto sunPos = stw::Vec2(0, 0);
+//	stw::SimdPlanetSystem<32> ps{ planetsAmount, sunPos };
+//
+//	for (auto _ : state)
+//	{
+//		ps.Update(DELTA_TIME);
+//	}
+//}
+//BENCHMARK(BM_PlanetsSIMDx32)->Range(MIN_PLANETS, MAX_PLANETS);
+//
+//static void BM_PlanetsSIMDx64(benchmark::State& state)
+//{
+//	const std::size_t planetsAmount = state.range(0);
+//	constexpr auto sunPos = stw::Vec2(0, 0);
+//	stw::SimdPlanetSystem<64> ps{ planetsAmount, sunPos };
+//
+//	for (auto _ : state)
+//	{
+//		ps.Update(DELTA_TIME);
+//	}
+//}
+//BENCHMARK(BM_PlanetsSIMDx64)->Range(MIN_PLANETS, MAX_PLANETS);
+//
+//static void BM_PlanetsSIMDx128(benchmark::State& state)
+//{
+//	const std::size_t planetsAmount = state.range(0);
+//	constexpr auto sunPos = stw::Vec2(0, 0);
+//	stw::SimdPlanetSystem<128> ps{ planetsAmount, sunPos };
+//
+//	for (auto _ : state)
+//	{
+//		ps.Update(DELTA_TIME);
+//	}
+//}
+//BENCHMARK(BM_PlanetsSIMDx128)->Range(MIN_PLANETS, MAX_PLANETS);
+//
+//static void BM_PlanetsSIMDx256(benchmark::State& state)
+//{
+//	const std::size_t planetsAmount = state.range(0);
+//	constexpr auto sunPos = stw::Vec2(0, 0);
+//	stw::SimdPlanetSystem<256> ps{ planetsAmount, sunPos };
+//
+//	for (auto _ : state)
+//	{
+//		ps.Update(DELTA_TIME);
+//	}
+//}
+//BENCHMARK(BM_PlanetsSIMDx256)->Range(MIN_PLANETS, MAX_PLANETS);
 
 BENCHMARK_MAIN();
