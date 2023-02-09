@@ -45,7 +45,7 @@ int main()
 	FpsCounter fpsCounter;
 
 	constexpr float sunMass = 100000000000000.0f;
-	constexpr std::size_t planetAmount = 10'000;
+	constexpr std::size_t planetAmount = 20'000;
 	stw::PlanetSystem ps{ planetAmount, {0, 0}, sunMass };
 
 	sf::Clock clock;

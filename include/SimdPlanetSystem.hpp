@@ -16,7 +16,7 @@ class SimdPlanetSystem
 {
 public:
 	static constexpr float INNER_RADIUS = 200.0f;
-	static constexpr float OUTER_RADIUS = 800.0f;
+	static constexpr float OUTER_RADIUS = 1200.0f;
 	static constexpr float GRAVITY_CONSTANT = 1000000.0f;
 
 	SimdPlanetSystem(std::size_t planetsAmount, Vec2 sunPos);
