@@ -17,6 +17,13 @@ target_link_libraries(VectorBenchmarks PRIVATE CoreLib benchmark::benchmark)
 add_executable(PlanetsBenchmarks "PlanetsBench.cpp")
 target_link_libraries(PlanetsBenchmarks PRIVATE CoreLib benchmark::benchmark)
 
+if (WIN32 AND BUILD_SHARED_LIBS)
+    add_custom_command(TARGET VectorBenchmarks POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_RUNTIME_DLLS:VectorBenchmarks> $<TARGET_FILE_DIR:VectorBenchmarks> COMMAND_EXPAND_LISTS)
+    add_custom_command(TARGET PlanetsBenchmarks POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_RUNTIME_DLLS:PlanetsBenchmarks> $<TARGET_FILE_DIR:PlanetsBenchmarks> COMMAND_EXPAND_LISTS)
+endif()
+
 if(MSVC)
     target_compile_options(VectorBenchmarks PUBLIC /arch:AVX2 /Oi /GR- /EHs-c- /FA /Oy- /GL)
     target_link_options(VectorBenchmarks PUBLIC /LTCG)

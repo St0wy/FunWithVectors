@@ -15,11 +15,11 @@ Vec2 Vec2::Normalized() const
 {
 	if (x == 0 && y == 0)
 	{
-		return {0, 0};
+		return { 0, 0 };
 	}
 
 	const float invMag = 1.0f / Magnitude();
-	return {x * invMag, y * invMag};
+	return { x * invMag, y * invMag };
 }
 
 float Vec2::Distance(const Vec2 other) const
@@ -45,6 +45,11 @@ std::string Vec2::ToString() const
 	//	return std::format("[{}, {}]", x, y);
 }
 
+Vec2::operator sf::Vector2<float>() const
+{
+	return { x, y };
+}
+
 std::ostream& operator<<(std::ostream& os, const Vec2 vec)
 {
 	return os << vec.ToString();
@@ -63,11 +68,6 @@ Vec2 operator*(const float scalar, const Vec2 vec)
 Vec2 operator/(Vec2 vec, const float scalar)
 {
 	return vec /= scalar;
-}
-
-Vec2::operator raylib::Vector2() const
-{
-	return {x, y};
 }
 
 }

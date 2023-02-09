@@ -27,11 +27,12 @@ set(SOURCE
     "src/PlanetSystem.cpp"
     "include/intrinsics.hpp"
     "include/SimdPlanetSystem.hpp"
+    "include/FpsCounter.hpp"
 )
 
 add_library(CoreLib STATIC ${SOURCE} )
 target_include_directories(CoreLib PUBLIC include/)
-target_link_libraries(CoreLib PUBLIC raylib raylib_cpp spdlog)
+target_link_libraries(CoreLib PUBLIC sfml-graphics sfml-window sfml-system spdlog)
 
 if(MSVC)
     target_compile_options(CoreLib PUBLIC /arch:AVX2 /Oi /GR- /EHs-c- /FA /Oy- /GL)
@@ -47,11 +48,29 @@ include(cmake/libs.cmake)
 # Link Game target with main
 set(GAME_SRC "src/main.cpp")
 add_executable(Game ${GAME_SRC})
-target_link_libraries(Game PRIVATE CoreLib raylib raylib_cpp spdlog)
+target_link_libraries(Game PRIVATE CoreLib sfml-graphics sfml-window sfml-system spdlog)
+
+if(WIN32)
+    target_link_libraries(Game PRIVATE sfml-main)
+endif()
+
+if (WIN32 AND BUILD_SHARED_LIBS)
+    add_custom_command(TARGET Game POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_RUNTIME_DLLS:Game> $<TARGET_FILE_DIR:Game> COMMAND_EXPAND_LISTS)
+endif()
 
 set(GAME_SRC_SIMD "src/main_simd.cpp")
 add_executable(GameSimd ${GAME_SRC_SIMD})
-target_link_libraries(GameSimd PRIVATE CoreLib raylib raylib_cpp spdlog)
+target_link_libraries(GameSimd PRIVATE CoreLib sfml-graphics sfml-window sfml-system spdlog)
+
+if (WIN32 AND BUILD_SHARED_LIBS)
+    add_custom_command(TARGET GameSimd POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_RUNTIME_DLLS:Game> $<TARGET_FILE_DIR:Game> COMMAND_EXPAND_LISTS)
+endif()
+
+include(cmake/data.cmake)
+add_data_folder(Game)
+add_data_folder(GameSimd)
 
 add_subdirectory(tests)
 add_subdirectory(benchmarks)

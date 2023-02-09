@@ -1,8 +1,9 @@
 #pragma once
 
-#include <raylib-cpp.hpp>
 #include <xtr1common>
 #include <random>
+
+#include <SFML/Graphics/Color.hpp>
 
 template<typename T>
 std::enable_if_t<std::is_integral_v<T>, T> RandomRange(T start, T end)
@@ -31,7 +32,7 @@ inline bool RandomBool()
 	return RandomRange<int>(0, 1) > 0;
 }
 
-inline raylib::Color GetRandomColor()
+inline sf::Color GetRandomColor()
 {
 	const auto r = static_cast<unsigned char>(
 		RandomRange(static_cast<unsigned short>(50), static_cast<unsigned short>(255)));
@@ -39,5 +40,5 @@ inline raylib::Color GetRandomColor()
 		RandomRange(static_cast<unsigned short>(50), static_cast<unsigned short>(255)));
 	const auto b = static_cast<unsigned char>(
 		RandomRange(static_cast<unsigned short>(50), static_cast<unsigned short>(255)));
-	return raylib::Color(r, g, b);
+	return sf::Color(r, g, b);
 }

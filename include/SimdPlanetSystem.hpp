@@ -1,8 +1,8 @@
 #pragma once
 
 #include <numbers>
-#include <raylib-cpp.hpp>
 #include <vector>
+#include <SFML/Graphics.hpp>
 
 #include "Planet.hpp"
 
@@ -23,15 +23,15 @@ public:
 
 	void SetupSpeeds();
 	void Update(float deltaTime);
-	void Draw() const;
+	void Draw(sf::RenderWindow&);
 
 private:
 	std::vector<Vec2xN<N>> m_Positions{};
 	std::vector<Vec2xN<N>> m_Velocities{};
 	std::vector<Vec2xN<N>> m_Forces{};
-	std::vector<raylib::Color> m_Colors{};
-	std::vector<float> m_Radii{};
+	std::vector<sf::CircleShape> m_Shapes{};
 	Vec2 m_SunPos;
+	sf::CircleShape m_SunShape{};
 
 	[[nodiscard]] Vec2 GetRandomPositionInSystem() const;
 };
@@ -41,18 +41,21 @@ SimdPlanetSystem<N>::SimdPlanetSystem(const std::size_t planetsAmount, const Vec
 	: m_SunPos(sunPos)
 {
 	assert(planetsAmount % N == 0);
+	m_SunShape.setPosition(sunPos);
+	m_SunShape.setRadius(15.0f);
+	m_SunShape.setFillColor(sf::Color::Red);
+
 	const std::size_t dividedAmount = planetsAmount / N;
 
 	m_Positions.reserve(dividedAmount);
 	m_Velocities.reserve(dividedAmount);
 	m_Forces.reserve(dividedAmount);
-	m_Colors.reserve(planetsAmount);
-	m_Radii.reserve(planetsAmount);
+	m_Shapes.reserve(planetsAmount);
 
 	for (std::size_t i = 0; i < planetsAmount; ++i)
 	{
-		m_Colors.push_back(GetRandomColor());
-		m_Radii.push_back(RandomRange(Planet::MIN_RADIUS, Planet::MAX_RADIUS));
+		m_Shapes.emplace_back(RandomRange(Planet::MIN_RADIUS, Planet::MAX_RADIUS));
+		m_Shapes[i].setFillColor(GetRandomColor());
 
 		if (i % N == 0)
 		{
@@ -112,17 +115,19 @@ void SimdPlanetSystem<N>::Update(const float deltaTime)
 }
 
 template <std::size_t N>
-void SimdPlanetSystem<N>::Draw() const
+void SimdPlanetSystem<N>::Draw(sf::RenderWindow& window)
 {
-	DrawCircle(static_cast<int>(m_SunPos.x), static_cast<int>(m_SunPos.y), 15.0f, RED);
+	window.draw(m_SunShape);
 
-	for (std::size_t i = 0; i < m_Colors.size(); ++i)
+	for (std::size_t i = 0; i < m_Shapes.size(); ++i)
 	{
 		const std::size_t j = i / N;
 		const std::size_t rest = i % N;
+
 		const int x = static_cast<int>(m_Positions[j].AtX(rest));
 		const int y = static_cast<int>(m_Positions[j].AtY(rest));
-		DrawCircle(x, y, m_Radii[i], m_Colors[i]);
+		m_Shapes[i].setPosition(m_Positions[j].GetSubVec(rest));
+		window.draw(m_Shapes[i]);
 	}
 }
 

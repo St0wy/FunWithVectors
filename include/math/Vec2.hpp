@@ -2,7 +2,9 @@
 
 #include <string>
 #include <algorithm>
-#include "Vector2.hpp"
+
+#include "SFML/System/Vector2.hpp"
+
 #include "spdlog/fmt/ostr.h"
 
 namespace stw
@@ -18,7 +20,7 @@ struct Vec2
 	{}
 
 	// ReSharper disable once CppNonExplicitConvertingConstructor
-	Vec2(const raylib::Vector2 vec) : x(vec.x), y(vec.y) {}
+	Vec2(const sf::Vector2f vec) : x(vec.x), y(vec.y) {}
 
 	float x;
 	float y;
@@ -71,7 +73,7 @@ struct Vec2
 
 	friend Vec2 operator/(Vec2 vec, float scalar);
 
-	operator raylib::Vector2() const;
+	operator sf::Vector2f() const;
 };
 
 constexpr Vec2 Vec2::Lerp(const Vec2 a, const Vec2 b, float t)

@@ -1,6 +1,8 @@
 #include "Planet.hpp"
 #include "Consts.hpp"
 
+#include <SFML/Graphics/RenderWindow.hpp>
+
 void stw::Planet::Update(const Vec2 sunPos, const float sunMass, const float deltaTime)
 {
 	AddGravityForce(sunPos, sunMass);
@@ -23,9 +25,10 @@ void stw::Planet::SetupSpeed(const Vec2 sunPos, const float sunMass)
 	m_Velocity = perpendicular * velocityAmount;
 }
 
-void stw::Planet::Draw() const
+void stw::Planet::Draw(sf::RenderWindow& window)
 {
-	DrawCircle(static_cast<int>(m_Position.x), static_cast<int>(m_Position.y), m_Radius, m_Color);
+	m_Circle.setPosition(m_Position);
+	window.draw(m_Circle);
 }
 
 void stw::Planet::AddGravityForce(const Vec2 pos, const float mass)

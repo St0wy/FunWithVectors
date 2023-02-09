@@ -38,18 +38,6 @@
       "cmakeExecutable": "C:/Users/stowy/scoop/apps/cmake/3.25.2/bin/cmake.exe"
     },
     {
-      "name": "x64-Clang-Release-DebInfo",
-      "generator": "Ninja",
-      "configurationType": "RelWithDebInfo",
-      "buildRoot": "${projectDir}\\out\\build\\${name}",
-      "installRoot": "${projectDir}\\out\\install\\${name}",
-      "cmakeExecutable": "C:/Users/stowy/scoop/apps/cmake/3.25.2/bin/cmake.exe",
-      "cmakeCommandArgs": "",
-      "buildCommandArgs": "",
-      "ctestCommandArgs": "",
-      "inheritEnvironments": [ "clang_cl_x64_x64" ]
-    },
-    {
       "name": "x64-Release-DebInfo",
       "generator": "Ninja",
       "configurationType": "RelWithDebInfo",

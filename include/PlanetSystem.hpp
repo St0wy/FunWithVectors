@@ -4,6 +4,9 @@
 
 #include "Planet.hpp"
 
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Window/Window.hpp>
+
 namespace stw
 {
 class PlanetSystem
@@ -15,11 +18,12 @@ public:
 	PlanetSystem(std::size_t planetsAmount, Vec2 sunPos, float sunMass);
 
 	void Update(float deltaTime);
-	void Draw() const;
+	void Draw(sf::RenderWindow&);
 
 private:
-	std::vector<Planet> m_Planets;
-	float m_SunMass;
-	Vec2 m_SunPos;
+	std::vector<Planet> m_Planets{};
+	float m_SunMass{};
+	Vec2 m_SunPos{};
+	sf::CircleShape m_SunShape{};
 };
 } // stw

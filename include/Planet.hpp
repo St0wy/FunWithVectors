@@ -1,6 +1,7 @@
 #pragma once
 
-#include <raylib-cpp.hpp>
+#include <SFML/Graphics/CircleShape.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 
 #include "math/Vec2.hpp"
 #include "math/Utils.hpp"
@@ -20,18 +21,18 @@ public:
 
 	explicit Planet(const Vec2 position) : m_Position(position)
 	{
-		m_Radius = RandomRange(MIN_RADIUS, MAX_RADIUS);
-		m_Mass = BASE_MASS * m_Radius;
+		m_Circle = sf::CircleShape(RandomRange(MIN_RADIUS, MAX_RADIUS));
+		m_Mass = BASE_MASS * m_Circle.getRadius();
 		const auto r = static_cast<unsigned char>(
 			RandomRange(static_cast<unsigned short>(50), static_cast<unsigned short>(255)));
 		const auto g = static_cast<unsigned char>(
 			RandomRange(static_cast<unsigned short>(50), static_cast<unsigned short>(255)));
 		const auto b = static_cast<unsigned char>(
 			RandomRange(static_cast<unsigned short>(50), static_cast<unsigned short>(255)));
-		m_Color = raylib::Color(r, g, b);
+		m_Circle.setFillColor(sf::Color(r, g, b));
 	}
 
-	Planet(const Vec2 position, const float mass, const float radius) : m_Radius(radius), m_Mass(mass), m_Position(position)
+	Planet(const Vec2 position, const float mass, const float radius) : m_Mass(mass), m_Position(position), m_Circle(radius)
 	{}
 
 	void SetupSpeed(Vec2 sunPos, float sunMass);
@@ -40,7 +41,7 @@ public:
 
 	void AddGravityForce(Vec2 pos, float mass);
 
-	void Draw() const;
+	void Draw(sf::RenderWindow&);
 
 	[[nodiscard]] Vec2 GetPosition() const
 	{
@@ -58,12 +59,11 @@ public:
 	}
 
 private:
-	float m_Radius{};
 	float m_Mass{};
 	Vec2 m_Position{};
 	Vec2 m_Velocity{};
 	Vec2 m_Force{};
-	raylib::Color m_Color{};
+	sf::CircleShape m_Circle{};
 };
 
 } // stw

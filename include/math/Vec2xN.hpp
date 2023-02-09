@@ -31,6 +31,7 @@ public:
 	constexpr std::span<float, N> GetY() { return m_Y; }
 	[[nodiscard]] constexpr float AtX(std::size_t i) const { return m_X[i]; }
 	[[nodiscard]] constexpr float AtY(std::size_t i) const { return m_Y[i]; }
+	[[nodiscard]] constexpr Vec2 GetSubVec(std::size_t i) const { return { m_X[i], m_Y[i] }; }
 
 	static constexpr Vec2xN<N> NewRandom();
 	[[nodiscard]] std::array<float, N> Magnitudes() const;
